@@ -5,35 +5,37 @@ package by.bsu.hostel.dao;
  */
 
 import by.bsu.hostel.domain.Entity;
+import by.bsu.hostel.exception.DAOException;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-public abstract class DAO <K, T extends Entity> {
-    public abstract List<T> findAll();
-    public abstract T findEntityById(K id);
-    //public abstract boolean delete(K id);
-    public abstract boolean delete(T entity);
-    public abstract boolean create(T entity);
-    public abstract T update(T entity);
-    //??
-    public void close(Statement st) {
-        try {
-            if (st != null) {
-                st.close();
+
+
+public abstract class DAO<T extends Entity> {
+    static Logger log = Logger.getLogger(DAO.class);
+
+    public abstract List<T> findAll() throws DAOException;
+
+    public abstract T findById(Long id) throws DAOException;
+
+    public abstract boolean deleteById(Long id) throws DAOException;
+
+    public abstract boolean delete(T entity) throws DAOException;
+
+    public abstract boolean add(T entity) throws DAOException;
+
+    public abstract boolean update(T entity) throws DAOException;
+
+
+    public void close(Statement statement) {
+        if(statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                log.error("Can't close statement" + e);
             }
-        } catch (SQLException e) {
-// лог о невозможности закрытия Statement
-        }
-    }
-    public void close(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-// генерация исключения, т.к. нарушается работа пула
         }
     }
 }

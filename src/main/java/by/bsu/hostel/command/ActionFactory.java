@@ -4,24 +4,28 @@ package by.bsu.hostel.command;
  * Created by Kate on 08.02.2016.
  */
 
-import by.bsu.hostel.manager.MessageManager;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
+
 public class ActionFactory {
-    public ActionCommand defineCommand(HttpServletRequest request) {
+    static Logger log = Logger.getLogger(ActionFactory.class);
+
+    public static ActionCommand defineCommand(HttpServletRequest request) {
+       // MessageManager messageManager = new MessageManager();
         ActionCommand current = new EmptyCommand();
-// извлечение имени команды из запроса
         String action = request.getParameter("command");
+        log.debug("Action in factory: " + action);
         if (action == null || action.isEmpty()) {
-// если команда не задана в текущем запросе
             return current;
         }
-// получение объекта, соответствующего команде
-        try {
+        //try {
             CommandEnum currentEnum = CommandEnum.valueOf(action.toUpperCase());
             current = currentEnum.getCurrentCommand();
-        } catch (IllegalArgumentException e) {
-            request.setAttribute("wrongAction", action + MessageManager.getProperty("message.wrongaction"));
-        }
+        //}
+//        catch (IllegalArgumentException e) {
+//            request.setAttribute("wrongAction", action + messageManager.getProperty("message.wrongaction"));
+//        }
         return current;
     }
 }

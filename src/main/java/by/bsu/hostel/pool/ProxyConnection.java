@@ -10,26 +10,31 @@ import java.util.concurrent.Executor;
  * Created by Kate on 07.02.2016.
  */
 public class ProxyConnection implements Connection {
-        private Connection connection;
-        protected ProxyConnection(Connection connection) { // только в пакете
-            this.connection = connection;
-        }
-        @Override
-        public Statement createStatement() throws SQLException {
-            return connection.createStatement();
-        }
-        @Override
-        public void close() throws SQLException {//
-            connection.close();
-        }
-        @Override
-        public void commit() throws SQLException {
-            connection.commit();
-        }
-        @Override
-        public boolean isClosed() throws SQLException {
-            return connection.isClosed();
-        }
+    private Connection connection;
+
+    protected ProxyConnection(Connection connection) { // только в пакете
+        this.connection = connection;
+    }
+
+    @Override
+    public Statement createStatement() throws SQLException {
+        return connection.createStatement();
+    }
+
+    @Override
+    public void close() throws SQLException {
+        connection.close();
+    }
+
+    @Override
+    public void commit() throws SQLException {
+        connection.commit();
+    }
+
+    @Override
+    public boolean isClosed() throws SQLException {
+        return connection.isClosed();
+    }
 
     @Override
     public DatabaseMetaData getMetaData() throws SQLException {
@@ -242,9 +247,9 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-        public PreparedStatement prepareStatement(String sql) throws SQLException {
-            return connection.prepareStatement(sql);
-        }
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
+        return connection.prepareStatement(sql);
+    }
 
     @Override
     public CallableStatement prepareCall(String sql) throws SQLException {
@@ -257,13 +262,14 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-        public void rollback() throws SQLException {
-            connection.rollback();
-        }
-        @Override
-        public void setAutoCommit(boolean flag) throws SQLException {
-            connection.setAutoCommit(flag);
-        }
+    public void rollback() throws SQLException {
+        connection.rollback();
+    }
+
+    @Override
+    public void setAutoCommit(boolean flag) throws SQLException {
+        connection.setAutoCommit(flag);
+    }
 
     @Override
     public boolean getAutoCommit() throws SQLException {

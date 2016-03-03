@@ -1,0 +1,19 @@
+#footer {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:20px;
+    border-top: 2px solid darkseagreen;
+    clear: both;
+    position: relative;
+    z-index: 10;
+    height: 80px;
+    margin-top: -3em;
+}
+
+
+
+
+
+
+

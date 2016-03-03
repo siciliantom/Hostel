@@ -1,0 +1,47 @@
+body {
+    background: url(/images/york.jpg) no-repeat;
+    margin: 0 ;
+}
+
+#section {
+    background: url(/images/york.jpg) no-repeat;
+    background-size: 100%;
+    min-height: 80%;
+    padding: 40px 0 70px 0;
+    text-align:center;
+}
+.hostel {
+    color: thistle;
+    font-size: 38pt;
+    font-family: Arial;
+}
+div .welcome {
+    color: black;
+    font-size: 33pt;
+    font-family: Monospaced;
+}
+/*#section.welcome {*/
+/*color: lightgreen;*/
+/*font-size: 35pt;*/
+/*font-family: Monospaced;*/
+/*}*/
+
+.logpass {
+    color: whitesmoke;
+    font-size: 25pt;
+}
+
+.please {
+    color: lightpink;
+    font-size: 18pt;
+    align-content: center;
+    font-family: cursive;
+}
+
+div a {
+    color: lightcoral;
+}
+
+/*.reg:hover{*/
+/*color: khaki;*/
+/*}*/

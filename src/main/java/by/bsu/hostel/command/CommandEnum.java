@@ -9,12 +9,23 @@ public enum CommandEnum {
             this.command = new LoginCommand();
         }
     },
+    REGISTER {
+        {
+            this.command = new RegisterCommand();
+        }
+    },
+    SHOW_REG_FORM {
+        {
+            this.command = new ShowRegCommand();
+        }
+    },
     LOGOUT {
         {
             this.command = new LogoutCommand();
         }
     };
     ActionCommand command;
+
     public ActionCommand getCurrentCommand() {
         return command;
     }

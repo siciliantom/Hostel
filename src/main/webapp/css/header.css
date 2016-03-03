@@ -1,0 +1,18 @@
+#header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin:0;
+    border-bottom: 2px solid darkseagreen;
+    height: 80px;
+}
+.hostel_name{
+    color:purple;
+    font-size: 18pt;
+}
+.role{
+    color:lightgreen;
+    font-size: 12pt;
+    text-align: right;
+}

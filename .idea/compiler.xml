@@ -26,5 +26,8 @@
         <module name="Hostel" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Hostel" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
