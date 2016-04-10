@@ -1,8 +1,10 @@
 package by.bsu.hostel.pool;
 
 import by.bsu.hostel.exception.PoolException;
+import com.mysql.jdbc.Driver;
 import org.apache.log4j.Logger;
 
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.Lock;
@@ -12,8 +14,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by Kate on 07.02.2016.
  */
 public class ConnectionPool {
-    private static final int POOL_SIZE = 7;
-    private static final int ATTEMPTS_LIMIT = 14;
+    private static final int POOL_SIZE = 4;
+    private static final int ATTEMPTS_LIMIT = 2;
     private static ConnectionPool connectionPool = null;
     private volatile static boolean instanceCreated = false;
     private static ArrayBlockingQueue<ProxyConnection> connectionQueue;
@@ -25,18 +27,22 @@ public class ConnectionPool {
         log.debug("Connecting to database...");
         int currentPoolSize = 0;
         int attemptsCount = 0;
+        try {
+            DriverManager.registerDriver(new Driver());
+        } catch (SQLException e) {
+            throw new PoolException("Can't create connection pool!" + e);
+        }
         while (currentPoolSize < POOL_SIZE && attemptsCount < ATTEMPTS_LIMIT) {
             try {
                 ProxyConnection proxyConnection = new ProxyConnection(ConnectorDB.getConnection());
                 connectionQueue.offer(proxyConnection);
                 currentPoolSize++;
-            } catch (SQLException | ClassNotFoundException e) {
-                log.debug("Can't get connection" + e);
-            } finally {
+            } catch (SQLException e) {
                 attemptsCount++;
+                log.warn("Can't get connection" + e);
             }
         }
-        if (connectionQueue.size() != POOL_SIZE) {
+        if (attemptsCount == ATTEMPTS_LIMIT) {
             throw new PoolException("Can't create connection pool!");
         }
     }
@@ -60,7 +66,7 @@ public class ConnectionPool {
         return connectionPool;
     }
 
-    public static ProxyConnection getConnection(){
+    public static ProxyConnection getConnection() {
         ProxyConnection proxyConnection = null;
         try {
             proxyConnection = connectionQueue.take();
@@ -79,16 +85,15 @@ public class ConnectionPool {
         int attemptsCount = 0;
         while (currentPoolSize < connectionQueue.size() && attemptsCount < ATTEMPTS_LIMIT) {
             try {
-                connectionQueue.poll().close();
+                connectionQueue.poll().closeConnection();
                 currentPoolSize++;
             } catch (SQLException e) {
-                log.debug("Can't close connection!" + e);
-            } finally {
                 attemptsCount++;
+                log.debug("Can't close connection!" + e);
             }
         }
-        if (!connectionQueue.isEmpty()) {//
-            log.error("Can't close pool!" + connectionQueue.size());
+        if (!connectionQueue.isEmpty()) {
+            log.error("Can't close pool!");
         }
     }
 }

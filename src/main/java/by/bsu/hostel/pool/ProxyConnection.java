@@ -12,7 +12,7 @@ import java.util.concurrent.Executor;
 public class ProxyConnection implements Connection {
     private Connection connection;
 
-    protected ProxyConnection(Connection connection) { // только в пакете
+    ProxyConnection(Connection connection) { // только в пакете
         this.connection = connection;
     }
 
@@ -23,6 +23,10 @@ public class ProxyConnection implements Connection {
 
     @Override
     public void close() throws SQLException {
+        ConnectionPool.getInstance().returnConnection(this);
+    }
+
+    void closeConnection() throws SQLException {
         connection.close();
     }
 

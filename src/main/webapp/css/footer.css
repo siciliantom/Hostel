@@ -1,14 +1,21 @@
 #footer {
     background-color:black;
-    color:white;
+    color:floralwhite;
     text-align:center;
+    font-size: 15pt;
     padding:20px;
-    border-top: 2px solid darkseagreen;
+    border-top: 3px solid floralwhite;
     clear: both;
     position: relative;
     z-index: 10;
-    height: 80px;
+    height: 70px;
     margin-top: -3em;
+}
+#address{
+    position: absolute;
+    text-align:right;
+    right: 50px;
+    top: 30px
 }
 
 

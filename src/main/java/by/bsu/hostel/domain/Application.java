@@ -1,43 +1,61 @@
 package by.bsu.hostel.domain;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 /**
  * Created by Kate on 13.02.2016.
  */
-public class Application {
-    private Long id;
-    private Integer placesAmount;
-    private int bookOrPay;
+public class Application extends Entity {
+    private int placesAmount;
     private Date arrivalDate;
     private Date departureDate;
+    private ConfirmationEnum confirmed;
+    private int finalPrice;
     private Long clientId;
-    private int confirmed;
-    private Long roomId;
+    private Room room;
 
-    public Long getId() {
-        return id;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Application(){
+        this.room = new Room();
     }
 
-    public Integer getPlacesAmount() {
-        return placesAmount;
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+//    public Long getRoomId() {
+//        return roomId;
+//    }
+//
+//    public void setRoomId(Long roomId) {
+//        this.roomId = roomId;
+//    }
+
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setPlacesAmount(Integer placesAmount) {
-        this.placesAmount = placesAmount;
+    public void setClientId(Long client_id) {
+        this.clientId = client_id;
     }
-
-    public Integer getBookOrPay() {
-        return bookOrPay;
-    }
-
-    public void setBookOrPay(Integer bookOrPay) {
-        this.bookOrPay = bookOrPay;
-    }
+//    public Client getClient() {
+//        return client;
+//    }
+//
+//    public void setClient(Client client) {
+//        this.client = client;
+//    }
+//
+//    public Room getRoom() {
+//        return room;
+//    }
+//
+//    public void setRoom(Room room) {
+//        this.room = room;
+//    }
 
     public Date getArrivalDate() {
         return arrivalDate;
@@ -47,35 +65,48 @@ public class Application {
         this.arrivalDate = arrivalDate;
     }
 
-    public Date getDepartureDate() {
-        return departureDate;
-    }
-
     public void setDepartureDate(Date departureDate) {
         this.departureDate = departureDate;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public int getPlacesAmount() {
+        return placesAmount;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setPlacesAmount(int placesAmount) {
+        this.placesAmount = placesAmount;
     }
 
-    public Integer getConfirmed() {
+    public int getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(int finalPrice) {
+        this.finalPrice = finalPrice;
+    }
+
+    public ConfirmationEnum getConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(Integer confirmed) {
+    public void setConfirmed(ConfirmationEnum confirmed) {
         this.confirmed = confirmed;
     }
 
-    public Long getRoomId() {
-        return roomId;
+    public Date getDepartureDate() {
+        return departureDate;
     }
 
-    public void setRoomId(Long roomId) {
-        this.roomId = roomId;
+    @Override
+    public String toString() {
+        return "Application{" +
+                "placesAmount=" + placesAmount +
+                ", arrivalDate=" + arrivalDate +
+                ", departureDate=" + departureDate +
+                ", confirmed=" + confirmed +
+                ", finalPrice=" + finalPrice +
+                ", clientId=" + clientId +
+                ", room=" + room +
+                '}';
     }
 }

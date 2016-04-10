@@ -3,18 +3,12 @@ package by.bsu.hostel.domain;
 /**
  * Created by Kate on 13.02.2016.
  */
-public class Authentication {
-    private Long id;
+public class Authentication extends Entity{
     private String login;
     private String password;
-    private String role;
+    private RoleEnum role;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Authentication() {
     }
 
     public String getLogin() {
@@ -25,11 +19,11 @@ public class Authentication {
         this.login = login;
     }
 
-    public String getRole() {
+    public RoleEnum getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(RoleEnum role) {
         this.role = role;
     }
 
@@ -39,5 +33,14 @@ public class Authentication {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Authentication{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

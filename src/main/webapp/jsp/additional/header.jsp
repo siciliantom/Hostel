@@ -9,8 +9,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${language}" scope="session"/>
-<%--session!!!--%>
+<fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="pagecontent"/>
 <html>
 <head><title>Header</title>
@@ -18,14 +17,21 @@
 </head>
 <body>
 <div id="header">
+    <span class="hostel_name"><fmt:message key="label.header_name"/></span><br>
     <br>
-    <span style="align:left">
-        <select name="locale">
-        <option value="rus">Ru</option>
-        <option value="en">En</option>
-    </select>
+
+    <form name="localeForm" method="POST" action="controller">
+        <span class="locale">
+            <select name="locale">
+                <option value="ru_RU" ${selectRu}>Ru</option>
+                <option value="en_US" ${selectEn}>En</option>
+            </select>
+            <input type="hidden" name="command" value="change_lang"/>
+        <fmt:message key="button.change" var="changeButton"/>
+        <input type="submit" name="change" value="${changeButton}"/>
+
         </span>
-    <span class="hostel_name">Stranger's Sight</span><br>
+    </form>
 </div>
 </body>
 </html>

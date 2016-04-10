@@ -4,63 +4,34 @@ package by.bsu.hostel.domain;
  * Created by Kate on 13.02.2016.
  */
 public class Client extends Entity{
-    private Long id;
     private String name;
     private String surname;
     private String country;
-//    private Long authorizationId;
-    private String login;
-    private String password;
-    private String role;
-    private Integer visitsAmount;
-    private int banned;
+//    private String login;
+//    private String password;
+//    private RoleEnum role;
+    private Status status;
+    private Authentication authentication;
 
-    public String getPassword() {
-        return password;
+    public Client(){
+        this.status = new Status();
+        this.authentication = new Authentication();
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public Status getStatus() {
+        return status;
     }
 
-    public String getLogin() {
-        return login;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public Authentication getAuthentication() {
+        return authentication;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    @Override
-
-    public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", country='" + country + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                ", visitsAmount=" + visitsAmount +
-                ", banned=" + banned +
-                '}';
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setAuthentication(Authentication authentication) {
+        this.authentication = authentication;
     }
 
     public String getName() {
@@ -87,27 +58,14 @@ public class Client extends Entity{
         this.country = country;
     }
 
-    public int getBanned() {
-        return banned;
+    @Override
+    public String toString() {
+        return "Client{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", country='" + country + '\'' +
+                ", status=" + status +
+                ", authentication=" + authentication +
+                '}';
     }
-
-    public void setBanned(int banned) {
-        this.banned = banned;
-    }
-
-    public Integer getVisitsAmount() {
-        return visitsAmount;
-    }
-
-    public void setVisitsAmount(Integer visitsAmount) {
-        this.visitsAmount = visitsAmount;
-    }
-
-//    public Long getAuthorizationId() {
-//        return authorizationId;
-//    }
-//
-//    public void setAuthorizationId(Long authorizationId) {
-//        this.authorizationId = authorizationId;
-//    }
 }

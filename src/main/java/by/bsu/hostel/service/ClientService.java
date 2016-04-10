@@ -9,6 +9,8 @@ import by.bsu.hostel.pool.ConnectionPool;
 import by.bsu.hostel.pool.ProxyConnection;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 /**
  * Created by Kate on 15.02.2016.
  */
@@ -28,16 +30,41 @@ public class ClientService {
 
 //    private ClientDAO clientDAO = null;
 
-//    public List<Client> findAll() throws ServiceException, SQLException {
-//        conn = ConnectionPool.getConnection();
-//        if (conn != null) {
-//            clientDAO = new ClientDAO(conn);
-//            List<Client> list = clientDAO.findAll();
-//            ConnectionPool.returnConnection(conn);
-//            return list;
-//        }
-//        throw new ServiceException("Can't get connection");//try later or smth
-//    }
+    public List<Client> findAll() throws ServiceException {
+        ProxyConnection conn = ConnectionPool.getConnection();
+        List<Client> clients = null;
+        if (conn != null) {
+            ClientDAO clientDAO = new ClientDAO(conn);
+            try {
+                clients = clientDAO.findAll();
+            } catch (DAOException e) {
+                throw new ServiceException(e);
+            } finally {
+                ConnectionPool.returnConnection(conn);
+            }
+        } else {
+            log.error("Can't get connection!");
+        }
+        return clients;
+    }
+
+    public boolean setBan(String clientId) throws ServiceException {
+        ProxyConnection conn = ConnectionPool.getConnection();
+        boolean banned = false;
+        if (conn != null) {
+            ClientDAO clientDAO = new ClientDAO(conn);
+            try {
+                banned = clientDAO.setBan(clientId);
+            } catch (DAOException e) {
+                throw new ServiceException(e);
+            } finally {
+                ConnectionPool.returnConnection(conn);
+            }
+        } else {
+            log.error("Can't get connection!");
+        }
+        return banned;
+    }
 
     //    public List<Client> authorize(Authorization authorization) throws ServiceException {
 //        conn = ConnectionPool.getConnection();
@@ -57,17 +84,18 @@ public class ClientService {
                 ConnectionPool.returnConnection(conn);
             }
         } else {
-            log.error("Can't get connection!");//
+            log.error("Can't get connection!");
         }
         return client;
     }
 
-    public boolean register(Client client) throws ServiceException {
+    public boolean checkBan (String rowId) throws ServiceException {
         ProxyConnection conn = ConnectionPool.getConnection();
+        boolean banned = false;
         if (conn != null) {
             ClientDAO clientDAO = new ClientDAO(conn);
             try {
-                return clientDAO.add(client);
+                banned = clientDAO.isBanned(rowId);
             } catch (DAOException e) {
                 throw new ServiceException(e);
             } finally {
@@ -75,7 +103,26 @@ public class ClientService {
             }
         } else {
             log.error("Can't get connection!");
-            return false;
+        }
+        return banned;
+    }
+
+    public boolean register(Client client) throws ServiceException {
+        ProxyConnection conn = ConnectionPool.getConnection();
+        boolean isRegistered = false;
+        if (conn != null) {
+            ClientDAO clientDAO = new ClientDAO(conn);
+            try {
+                isRegistered = clientDAO.add(client);
+                return isRegistered;
+            } catch (DAOException e) {
+                throw new ServiceException(e);
+            } finally {
+                ConnectionPool.returnConnection(conn);
+            }
+        } else {
+            log.error("Can't get connection!");//сообщ юзеру
+            return isRegistered;
         }
     }
 

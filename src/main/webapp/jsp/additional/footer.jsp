@@ -13,7 +13,10 @@
 </head>
 <body>
 <div id="footer">
-    Copyright © Hostel
+    <br>
+    <span> Copyright © Stranger's Sight Hostel</span>
+    <span id="address">168 East 24th Street New York, NY 10010
+    <br>strangershostel@gmail.com<br>212.260.9779</span>
 </div>
 </body>
 </html>
